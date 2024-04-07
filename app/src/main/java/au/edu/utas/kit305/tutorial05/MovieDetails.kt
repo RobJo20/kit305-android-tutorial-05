@@ -49,9 +49,11 @@ class MovieDetails : AppCompatActivity() {
                 }
         }
 
+        val frodo = db.document("characters/FDzAPRNCo5dLAaOqBa95")
+        val gandalf = db.document("characters/vFvNDrILm9cwvk9whTyq")
         ui.btnFrodoSwore.setOnClickListener {
             val newSwear = Swear(
-                character = "Frodo",
+                character = frodo,
                 word = ui.txtSwearWord.text.toString().ifEmpty { "Gosh" },
                 severity = ui.txtSwearSeverity.text.toString().ifEmpty { "0" }.toInt()
             )
@@ -59,7 +61,7 @@ class MovieDetails : AppCompatActivity() {
         }
         ui.btnGandalfSwore.setOnClickListener {
             val newSwear = Swear(
-                character = "Gandalf",
+                character = gandalf,
                 word = ui.txtSwearWord.text.toString().ifEmpty { "Gosh" },
                 severity = ui.txtSwearSeverity.text.toString().ifEmpty { "0" }.toInt()
             )
@@ -88,5 +90,13 @@ class MovieDetails : AppCompatActivity() {
         val swearCount = movieObject.swears?.size ?: 0
         val severityTotal = movieObject.swears?.fold(0) { acc, swear -> acc+swear.severity!! }?.toString() ?: "No Swears"
         ui.lblSwears.text = "Total Swears: $swearCount\nTotal Swear Severity level: $severityTotal"
+
+        //some testing code to use a document reference
+        for (swear in movieObject.swears.orEmpty())
+        {
+            swear.character?.get()?.addOnSuccessListener {
+                Log.d(FIREBASE_TAG,"character who swore: ${it.data!!["name"]}")
+            }
+        }
     }
 }

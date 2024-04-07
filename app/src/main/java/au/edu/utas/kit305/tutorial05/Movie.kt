@@ -1,5 +1,6 @@
 package au.edu.utas.kit305.tutorial05
 
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.Exclude
 
 class Movie (
@@ -13,7 +14,7 @@ class Movie (
 )
 
 class Swear (
-    var character : String? = null,
+    var character : DocumentReference? = null,
     var word : String? = null,
     var severity : Int? = null,
 )
