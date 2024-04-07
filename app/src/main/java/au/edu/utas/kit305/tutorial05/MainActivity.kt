@@ -3,11 +3,14 @@ package au.edu.utas.kit305.tutorial05
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import au.edu.utas.kit305.tutorial05.databinding.ActivityMainBinding
 import au.edu.utas.kit305.tutorial05.databinding.MyListItemBinding
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 
 val items = mutableListOf<Movie>()
 
@@ -26,6 +29,10 @@ class MainActivity : AppCompatActivity()
 
         //vertical list
         ui.myList.layoutManager = LinearLayoutManager(this)
+
+        //get db connection
+        val db = Firebase.firestore
+        Log.d("FIREBASE", "Firebase connected: ${db.app.name}")
     }
 
     inner class MovieHolder(var ui: MyListItemBinding) : RecyclerView.ViewHolder(ui.root) {}
