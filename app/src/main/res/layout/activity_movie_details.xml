@@ -71,4 +71,57 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtYear" />
+
+    <Button
+        android:id="@+id/btnFrodoSwore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Frodo Swore"
+        app:layout_constraintEnd_toEndOf="@+id/btnSave"
+        app:layout_constraintStart_toStartOf="@+id/btnSave"
+        app:layout_constraintTop_toBottomOf="@+id/btnSave" />
+
+    <Button
+        android:id="@+id/btnGandalfSwore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Gandalf Swore"
+        app:layout_constraintEnd_toEndOf="@+id/btnFrodoSwore"
+        app:layout_constraintStart_toStartOf="@+id/btnFrodoSwore"
+        app:layout_constraintTop_toBottomOf="@+id/btnFrodoSwore" />
+
+    <TextView
+        android:id="@+id/lblSwears"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnGandalfSwore" />
+
+    <EditText
+        android:id="@+id/txtSwearWord"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Swear Word"
+        android:inputType="text"
+        app:layout_constraintEnd_toStartOf="@+id/btnFrodoSwore"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnFrodoSwore" />
+
+    <EditText
+        android:id="@+id/txtSwearSeverity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Severity"
+        android:inputType="number"
+        app:layout_constraintEnd_toStartOf="@+id/btnGandalfSwore"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnGandalfSwore" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

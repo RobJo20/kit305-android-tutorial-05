@@ -7,5 +7,13 @@ class Movie (
 
     var title : String? = null,
     var year : Int? = null,
-    var duration : Float? = null
+    var duration : Float? = null,
+
+    var swears : MutableList<Swear>? = null,
+)
+
+class Swear (
+    var character : String? = null,
+    var word : String? = null,
+    var severity : Int? = null,
 )
