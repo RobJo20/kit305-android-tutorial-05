@@ -39,19 +39,51 @@ class MainActivity : AppCompatActivity()
         val db = Firebase.firestore
         Log.d("FIREBASE", "Firebase connected: ${db.app.name}")
 
+        //get all movies AFTER the year 2000 (added in lecture)
         val moviesCollection = db.collection("movies")
         ui.lblMovieCount.text = "Loading..."
         moviesCollection
+            .whereGreaterThan("year", 2000)//this is the line we added
             .get()
             .addOnSuccessListener { result ->
                 items.clear() //this line clears the list, and prevents a bug where items would be duplicated upon rotation of screen
                 Log.d(FIREBASE_TAG, "--- all movies ---")
                 for (document in result)
                 {
-                    //Log.d(FIREBASE_TAG, document.toString())
                     val movie = document.toObject<Movie>()
                     movie.id = document.id
                     Log.d(FIREBASE_TAG, movie.toString())
+
+                    //lecture example: reading a document reference
+                    //mainCharacter is a document reference to a document in the characters collection
+                    if (movie.mainCharacter != null)
+                    {
+                        //call get() on a document reference to get all the values from the internet
+                        val characterDocRef = movie.mainCharacter
+                        characterDocRef!!
+                            .get() //hey internet!
+                            .addOnSuccessListener {
+                                //for now, we just print it to logcat
+                                Log.d(FIREBASE_TAG, it.get("name").toString())
+                            }
+                    }
+
+                    //lecture example: reading in a sub-collection
+                    //call collection() on a document reference to access the sub collection
+                    val swearsCollection = document.reference.collection("swears")
+                    //code from there is pretty much the sae, call get() on a collection to get all documents
+                    swearsCollection
+                        .get()
+                        .addOnSuccessListener { swearsResult ->
+                            //working on movie.swears list instead of a list of items
+                            movie.swears = mutableListOf()
+                            //everything else is the same
+                            for (swearDocument in swearsResult)
+                            {
+                                val swear = swearDocument.toObject<Swear>()
+                                movie.swears!!.add(swear)
+                            }
+                        }
 
                     items.add(movie)
                 }
