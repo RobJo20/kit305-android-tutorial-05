@@ -1,10 +1,12 @@
 package au.edu.utas.kit305.tutorial05
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import au.edu.utas.kit305.tutorial05.databinding.ActivityMainBinding
@@ -14,6 +16,7 @@ import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObject
 
 const val FIREBASE_TAG = "FirebaseLogging"
+const val MOVIE_INDEX = "Movie_Index"
 
 val items = mutableListOf<Movie>()
 
@@ -53,7 +56,7 @@ class MainActivity : AppCompatActivity()
             }
             .addOnFailureListener {
                 Log.e(FIREBASE_TAG, "error writing document", it)
-            }*/
+}*/
 
         ui.lblMovieCount.text = "Loading..."
         moviesCollection
@@ -71,6 +74,7 @@ class MainActivity : AppCompatActivity()
                 }
                 (ui.myList.adapter as MovieAdapter).notifyDataSetChanged()
             }
+
     }
 
     inner class MovieHolder(var ui: MyListItemBinding) : RecyclerView.ViewHolder(ui.root) {}
@@ -92,7 +96,19 @@ class MainActivity : AppCompatActivity()
             holder.ui.txtYear.text = movie.year.toString()
 
             ui.lblMovieCount.text = "${getItemCount()} Movie(s)"
+
+            holder.ui.root.setOnClickListener{
+                val i = Intent(holder.ui.root.context, MovieDetails::class.java)
+                i.putExtra(MOVIE_INDEX, position)
+                startActivity(i)
+            }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        ui.myList.adapter?.notifyDataSetChanged()
     }
 }
 
